@@ -1,0 +1,13 @@
+<!-- Launch File -->
+<launch> 
+
+    <!-- Include helps you launch other launch files within this launch file-->
+        <!-- For file tag, mention the gazebo_ros empty world's launch file -->
+        <!-- For the arg name, give any name of your choice to this world -->
+        <!-- for the value tag, provide the path to the world file that you downloaded -->
+	<include file= "$(find gazebo_ros)/launch/empty_world.launch"> 
+		<arg name="world_name" value="$(find vehicle_urdf_updated)/launch/competition_arena.world"/> 
+	</include>
+
+
+</launch>
