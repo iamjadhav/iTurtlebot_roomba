@@ -1,23 +1,26 @@
+
+#pragma once
+
 #include <sstream>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 #include <geometry_msgs/Twist.h>
+#include "std_msgs/String.h"
 
 
-class walk{
+class Walk{
  private:
-  bool obstacle;
-  geometry_msgs::Twist msg;
   ros::NodeHandle n;
   ros::Subscriber laser_points;
-  ros::Publisher pubVel;
-  float linear;
-  float angular;
+  ros::Publisher actualVelocity;
+  bool obstacle_flag;
+  double linearVelocity;
+  double angularVelocity;
+  geometry_msgs::Twist message;
 
  public:
-    walk();
-    ~walk();
-    void movement();
-    void getLaser(const sensor_msgs::LaserScan::ConstPtr&);
-    bool obs_or_not();
+    Walk();
+    ~Walk();
+    void go();
+    void getLaser(const sensor_msgs::LaserScan::ConstPtr& detect);
 };
