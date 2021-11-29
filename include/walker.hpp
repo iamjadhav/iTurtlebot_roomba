@@ -33,14 +33,18 @@
  * @copyright Copyright (c) 2021
  */
 
-
 #pragma once
 
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 #include <geometry_msgs/Twist.h>
 
-
+/**
+ * @brief Walk class for the Walker Algorithm
+ * @param bool obstacle_flag Flag to check for obstacles
+ * @param double linearVelocity Linear Velocity of the Turtlebot
+ * @param double angularVelocity Angular Velocity of the Turtlebot
+ */
 class Walk{
  private:
   ros::NodeHandle n;

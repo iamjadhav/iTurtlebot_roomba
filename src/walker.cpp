@@ -36,6 +36,11 @@
 #include <iostream>
 #include "../include/walker.hpp"
 
+/**
+ * @brief Walk constructor to set turtlebot velocities,
+ *        Publish velocities and Subscribe to scan topic
+ *        and pulish velocities to the turtlebot
+ */
 Walk::Walk() {
   actualVelocity = n.advertise <geometry_msgs::Twist>("/cmd_vel", 1000);
   laser_points = n.subscribe<sensor_msgs::LaserScan> ("/scan", 1000, &Walk:: \
@@ -47,9 +52,14 @@ Walk::Walk() {
   obstacle_flag = false;
 }
 
+/**
+ * @brief Method to determine presence of obstacles using laser scan data
+ * @return returns if an obstacle is detected
+ */
 void Walk::getLaser(const sensor_msgs::LaserScan::ConstPtr& detect) {
   int i = 0;
   while (i < detect->ranges.size()) {
+    // Detecting obstacles at -35, 0 and 35 degrees
     if (detect->ranges[0] <= 0.6 || detect->ranges[35] <= 0.6 ||
                                     detect->ranges[325] <= 0.6) {
       obstacle_flag = true;
@@ -64,11 +74,13 @@ void Walk::go() {
   ros::Rate loop(10);
   while (ros::ok()) {
     if (obstacle_flag == true) {
+      // Turn Anti-clockwise if object detected
       ROS_WARN_STREAM(" Uh Oh! Obstacle Detected! Rerouting ..");
       message.linear.x = 0.0;
       message.angular.z = angularVelocity;
       loop.sleep();
     } else {
+      // Staright movement with linear velocity
       ROS_INFO_STREAM(" Moving along..");
       message.angular.z = 0.0;
       message.linear.x = linearVelocity;
@@ -79,6 +91,9 @@ void Walk::go() {
   }
 }
 
+/**
+ * @brief Destroy the Walk object
+ */
 Walk::~Walk() {
   ROS_INFO("Walker walking no more..");
 }
