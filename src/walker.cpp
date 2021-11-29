@@ -37,7 +37,6 @@
 #include "../include/walker.hpp"
 
 Walk::Walk() {
-
   actualVelocity = n.advertise <geometry_msgs::Twist>("/cmd_vel", 1000);
   laser_points = n.subscribe<sensor_msgs::LaserScan> ("/scan", 1000, &Walk:: \
                                                       getLaser, this);
@@ -46,15 +45,13 @@ Walk::Walk() {
   linearVelocity = 0.3;
   angularVelocity = 0.5;
   obstacle_flag = false;
-
 }
 
-
 void Walk::getLaser(const sensor_msgs::LaserScan::ConstPtr& detect) {
-
   int i = 0;
   while (i < detect->ranges.size()) {
-    if (detect->ranges[0] <= 0.6 || detect->ranges[35] <= 0.6 || detect->ranges[325] <= 0.6) {
+    if (detect->ranges[0] <= 0.6 || detect->ranges[35] <= 0.6 ||
+                                    detect->ranges[325] <= 0.6) {
       obstacle_flag = true;
       return;
     }
@@ -62,7 +59,6 @@ void Walk::getLaser(const sensor_msgs::LaserScan::ConstPtr& detect) {
   }
   obstacle_flag = false;
 }
-
 
 void Walk::go() {
   ros::Rate loop(10);
@@ -82,7 +78,6 @@ void Walk::go() {
     loop.sleep();
   }
 }
-
 
 Walk::~Walk() {
   ROS_INFO("Walker walking no more..");
