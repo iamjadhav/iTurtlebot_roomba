@@ -1,0 +1,27 @@
+<!-- Launch File -->
+<launch> 
+	<arg
+		name = "rosbagEnable"
+		default = "false"
+	/>
+
+	<include file= "$(find gazebo_ros)/launch/empty_world.launch"> 
+		<arg name="world_name" value="$(find iturtlebot_roomba)/launch/competition_arena.world"/> 
+	</include>
+
+	<param name= "robot_description" command="$(find xacro)/xacro --inorder '$(find turtlebot3_description)/urdf/turtlebot3_waffle.urdf.xacro'" />
+
+	<node args="-urdf -param robot_description -model  turtlebot3_waffle   " name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen"/>
+
+	<node pkg="iturtlebot_roomba" name="talker" type="talker" output = "screen"></node>
+
+	<node 
+        	pkg = "rosbag"
+		type = "record"
+		name = "ros_record"
+        	args = "record --duration=30 -a -O $(find iturtlebot_roomba)/results/recordedbag -x '/camera(.*)' "
+		if = "$(arg rosbagEnable)"
+   	/>
+
+
+</launch>
