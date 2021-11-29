@@ -1,7 +1,5 @@
-#include <ros/ros.h>
+
 #include <iostream>
-#include <geometry_msgs/Twist.h>
-#include <sensor_msgs/LaserScan.h>
 #include "../include/walker.hpp"
 
 Walk::Walk() {

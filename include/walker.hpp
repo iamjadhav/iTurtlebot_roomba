@@ -1,11 +1,9 @@
 
 #pragma once
 
-#include <sstream>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 #include <geometry_msgs/Twist.h>
-#include "std_msgs/String.h"
 
 
 class Walk{
